@@ -19,7 +19,7 @@ db.connect(function (err) {
   mainMenu();
 });
 
-// Main menu:
+// Main menu function:
 function mainMenu() {
   prompt([
     {
@@ -64,7 +64,7 @@ function mainMenu() {
   });
 }
 
-// View main menu:
+// View main menu function:
 function viewMenu() {
   prompt([
     {
@@ -103,7 +103,7 @@ function viewMenu() {
 }
 
 // View functions:
-// View all departments:
+// View all departments function:
 function viewAllDepartments() {
   db.query("SELECT * FROM department", (err, res) => {
     if (err) throw err;
@@ -112,7 +112,7 @@ function viewAllDepartments() {
   mainMenu();
 }
 
-// View all roles:
+// View all roles function:
 function viewAllRoles() {
   db.query("SELECT * FROM role", (err, res) => {
     console.table(res);
@@ -120,7 +120,7 @@ function viewAllRoles() {
   mainMenu();
 }
 
-// View all employees:
+// View all employees function:
 function viewAllEmployees() {
   db.query("SELECT * FROM employee", (err, res) => {
     console.table(res);
@@ -128,7 +128,7 @@ function viewAllEmployees() {
   mainMenu();
 }
 
-// Add main menu:
+// Add main menu function:
 function addMenu() {
   prompt([
     {
@@ -167,14 +167,14 @@ function addMenu() {
 }
 
 // Add functions:
-// Add department:
+// Add department function:
 function addDepartment() {
   prompt([
     {
       type: "input",
       name: "choice",
       message:
-        "Please enter the name of the deparment that you woudl like to add",
+        "Please enter the name of the department that you would like to add",
     },
   ]).then((res) => {
     let answer = res.choice;
@@ -189,7 +189,7 @@ function addDepartment() {
   });
 }
 
-// Add a role:
+// Add a role function:
 function addNewRole() {
   let departmentID = [];
   let departmentName = [];
@@ -245,7 +245,7 @@ function addRole(departmentID, departmentName) {
   });
 }
 
-// Add employee:
+// Add employee function:
 function addEmployee() {
   let addNewRoles = [];
 
@@ -304,8 +304,66 @@ function addEmployee() {
   });
 }
 
+// Update Employee role function:
+function updateEmployeeRole() {
+  const roleData = [];
+
+  db.query("SELECT * FROM role", (err, result) => {
+    if (err) throw err;
+
+    const roleData = result.map((role) => {
+      return {
+        name: role.title,
+        value: role.id,
+      };
+    });
+
+    db.query("SELECT * FROM employee", (err, res) => {
+      if (err) throw err;
+
+      const employeeData = res.map((employee) => {
+        return {
+          name: `${employee.first_name} ${employee.last_name}`,
+          value: employee.id,
+        };
+      });
+
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            name: "employee",
+            message:
+              "Please select the employee whose role you would like to update",
+            choices: employeeData,
+          },
+          {
+            type: "list",
+            name: "role",
+            message: "Please select their new role",
+            choices: roleData,
+          },
+        ])
+        .then((res) => {
+          console.log(res.employee);
+          console.log(res.role);
+          db.query(
+            "UPDATE employee SET employee.role_id = (?) WHERE employee.id = (?)",
+            [res.role, res.employee],
+            (err, res) => {
+              if (err) throw err;
+
+              console.log("Successfully updated the employee's role");
+              mainMenu();
+            }
+          );
+        });
+    });
+  });
+}
+
 // End the tracker function:
 const endFunction = () => {
-  console.log("End");
+  console.log("Employee tracker session ended");
   db.end();
 };
