@@ -86,7 +86,7 @@ function viewMenu() {
         },
         {
           name: "Back to Main Menu",
-          value: "backMainMenu",
+          value: "mainMenu",
         },
       ],
     },
@@ -102,8 +102,8 @@ function viewMenu() {
       case "viewAllEmployees":
         viewAllEmployees();
         break;
-      case "backMainMenu":
-        backMainMenu();
+      case "mainMenu":
+        mainMenu();
         break;
     }
   });
@@ -368,8 +368,6 @@ function updateEmployeeRole() {
     });
   });
 }
-
-// Back to main menu function:
 
 // End the tracker function:
 const endFunction = () => {
