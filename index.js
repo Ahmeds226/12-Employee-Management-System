@@ -157,11 +157,90 @@ function addMenu() {
         addDepartment();
         break;
       case "addRole":
-        addRole();
+        addNewRole();
         break;
       case "addEmployee":
         addEmployee();
         break;
     }
+  });
+}
+
+// Add functions:
+// Add department:
+function addDepartment() {
+  prompt([
+    {
+      type: "input",
+      name: "choice",
+      message:
+        "Please enter the name of the deparment that you woudl like to add",
+    },
+  ]).then((res) => {
+    let answer = res.choice;
+    db.query(
+      "INSERT INTO department (name) VALUES (?)",
+      [answer],
+      (err, res) => {
+        if (err) throw err;
+      }
+    );
+    mainMenu();
+  });
+}
+
+// Add a role:
+function addNewRole() {
+  let departmentID = [];
+  let departmentName = [];
+  db.query("SELECT * FROM department", (err, res) => {
+    if (err) throw err;
+
+    res.forEach(({ id }) => {
+      departmentID.push(id);
+    });
+
+    res.forEach(({ name }) => {
+      departmentName.push(name);
+    });
+    addRole(departmentID, departmentName);
+  });
+}
+
+function addRole(departmentID, departmentName) {
+  let id = "";
+  prompt([
+    {
+      type: "input",
+      name: "roleName",
+      message: "Please enter the role you would like to add",
+    },
+    {
+      type: "input",
+      name: "salary",
+      message: "Please enter the salary for this position",
+    },
+    {
+      type: "list",
+      name: "departmentName",
+      message: "Please enter the role's designated department",
+      choices: departmentName,
+    },
+  ]).then((answers) => {
+    for (let i = 0; i < departmentID.length; i++) {
+      if (answers.departmentName === departmentName[i]) {
+        id += departmentID[i];
+        console.log(id);
+      }
+    }
+    db.query(
+      "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
+      [answers.roleName, answers.salary, parseInt(id)],
+      (err, res) => {
+        if (err) throw err;
+        console.log("Role has been successfully added");
+      }
+    );
+    mainMenu();
   });
 }
