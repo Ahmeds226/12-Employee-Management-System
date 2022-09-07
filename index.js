@@ -17,8 +17,38 @@ db.connect(function (err) {
   console.table("Welcome to Employee Management System");
 });
 
-// Questions:
-function letsStart() {
+// Menu:
+const mainMenu = () => {
+  inquirer
+    .prompt({
+      name: "menu",
+      type: "list",
+      message: "Please select what you would like to do",
+      choices: ["View", "Add", "Update", "Delete", "End"],
+    })
+    .then((chosen) => {
+      switch (chosen.main) {
+        case "View":
+          viewMenu();
+          break;
+        case "Add":
+          addMenu();
+          break;
+        case "Update":
+          updateMenu();
+          break;
+        case "Delete":
+          deleteMenu();
+          break;
+        default:
+          console.log("End");
+          db.end();
+      }
+    });
+};
+
+// View main menu:
+function viewMenu() {
   prompt([
     {
       type: "list",
@@ -37,22 +67,6 @@ function letsStart() {
           name: "View all Employees",
           value: "viewAllEmployees",
         },
-        {
-          name: "Add a new Department",
-          value: "addDepartment",
-        },
-        {
-          name: "Add a new Role",
-          value: "addRole",
-        },
-        {
-          name: "Add a new Employee",
-          value: "addEmployee",
-        },
-        {
-          name: "Update an existing Employee Role",
-          value: "updateEmployeeRole",
-        },
       ],
     },
   ]).then((res) => {
@@ -67,20 +81,6 @@ function letsStart() {
       case "viewAllEmployees":
         viewAllEmployees();
         break;
-      case "addDepartment":
-        addDepartment();
-        break;
-      case "addRole":
-        addNewRole();
-        break;
-      case "addEmployee":
-        addEmployee();
-        break;
-      case "updateEmployeeRole":
-        updateEmployeeRole();
-        break;
     }
   });
 }
-
-letsStart();
