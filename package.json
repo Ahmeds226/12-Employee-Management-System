@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Ahmeds226/12-Employee-Management-System/issues"
   },
-  "homepage": "https://github.com/Ahmeds226/12-Employee-Management-System#readme"
+  "homepage": "https://github.com/Ahmeds226/12-Employee-Management-System#readme",
+  "dependencies": {
+    "inquirer": "^9.1.1"
+  }
 }
