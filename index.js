@@ -84,3 +84,29 @@ function viewMenu() {
     }
   });
 }
+
+// View functions:
+// View all departments:
+function viewAllDepartments() {
+  db.query("SELECT * FROM department", (err, res) => {
+    if (err) throw err;
+    console.table(res);
+  });
+  mainMenu();
+}
+
+// View all roles:
+function viewAllRoles() {
+  db.query("SELECT * FROM role", (err, res) => {
+    console.table(res);
+  });
+  mainMenu();
+}
+
+// View all employees:
+function viewAllEmployees() {
+  db.query("SELECT * FROM employee", (err, res) => {
+    console.table(res);
+  });
+  mainMenu();
+}
