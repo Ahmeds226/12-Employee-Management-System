@@ -1,7 +1,9 @@
+// Imports:
 const mysql = require("mysql2");
 const { prompt } = require("inquirer");
 const consoleTable = require("console.table");
 
+// Database connection:
 const db = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -21,7 +23,7 @@ function letsStart() {
     {
       type: "list",
       name: "choice",
-      message: "What would you like to do?",
+      message: "Please select what you would like to do",
       choices: [
         {
           name: "View all Departments",
