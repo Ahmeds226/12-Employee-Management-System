@@ -36,12 +36,12 @@ function mainMenu() {
           value: "addMenu",
         },
         {
-          name: "Update",
-          value: "updateMenu",
+          name: "Update an Employee's Role",
+          value: "updateEmployeeRole",
         },
         {
-          name: "Delete",
-          value: "deleteMenu",
+          name: "End tracker",
+          value: "endFunction",
         },
       ],
     },
@@ -54,11 +54,11 @@ function mainMenu() {
       case "addMenu":
         addMenu();
         break;
-      case "updateMenu":
-        updateMenu();
+      case "updateEmployeeRole":
+        updateEmployeeRole();
         break;
-      case "deleteMenu":
-        deleteMenu();
+      case "endFunction":
+        endFunction();
         break;
     }
   });
@@ -244,3 +244,68 @@ function addRole(departmentID, departmentName) {
     mainMenu();
   });
 }
+
+// Add employee:
+function addEmployee() {
+  let addNewRoles = [];
+
+  db.query("SELECT * FROM role", (err, res) => {
+    if (err) throw err;
+
+    addNewRole = res.map((role) => {
+      return {
+        name: role.title,
+        value: role.id,
+      };
+    });
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "first_name",
+          message:
+            "Please enter the first name of the new employee you would like to add",
+        },
+        {
+          type: "input",
+          name: "last_name",
+          message:
+            "Please enter the last name of the new employee you would like to add",
+        },
+        {
+          type: "list",
+          name: "role_id",
+          message: "Please select the role of the new employee",
+          choices: addNewRole,
+        },
+        {
+          type: "input",
+          name: "manager",
+          message: "Please enter the manager's ID",
+        },
+      ])
+      .then((answers) => {
+        db.query(
+          "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+          [
+            answers.first_name,
+            answers.last_name,
+            answers.role_id,
+            answers.manager,
+          ],
+          (err, res) => {
+            if (err) throw err;
+
+            console.log("Successfully added a new employee!");
+          }
+        );
+        mainMenu();
+      });
+  });
+}
+
+// End the tracker function:
+const endFunction = () => {
+  console.log("End");
+  db.end();
+};
