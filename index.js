@@ -1,5 +1,6 @@
 // Imports:
 const mysql = require("mysql2");
+const inquirer = require("inquirer");
 const { prompt } = require("inquirer");
 const consoleTable = require("console.table");
 
@@ -15,6 +16,7 @@ const db = mysql.createConnection({
 db.connect(function (err) {
   if (err) throw err;
   console.table("Welcome to Employee Management System");
+  mainMenu();
 });
 
 // Menu:
@@ -24,7 +26,7 @@ const mainMenu = () => {
       name: "menu",
       type: "list",
       message: "Please select what you would like to do",
-      choices: ["View", "Add", "Update", "Delete", "End"],
+      choices: ["View", "Add", "Update", "Delete"],
     })
     .then((chosen) => {
       switch (chosen.main) {
@@ -40,9 +42,6 @@ const mainMenu = () => {
         case "Delete":
           deleteMenu();
           break;
-        default:
-          console.log("End");
-          db.end();
       }
     });
 };
@@ -109,4 +108,42 @@ function viewAllEmployees() {
     console.table(res);
   });
   mainMenu();
+}
+
+// View main menu:
+function addMenu() {
+  prompt([
+    {
+      type: "list",
+      name: "choice",
+      message: "Please select what you would like to do",
+      choices: [
+        {
+          name: "Add A Department",
+          value: "addDepartment",
+        },
+        {
+          name: "Add A Role",
+          value: "addRole",
+        },
+        {
+          name: "Add An Employee",
+          value: "addEmployee",
+        },
+      ],
+    },
+  ]).then((res) => {
+    let choice = res.choice;
+    switch (choice) {
+      case "viewAllDepartments":
+        viewAllDepartments();
+        break;
+      case "viewAllRoles":
+        viewAllRoles();
+        break;
+      case "viewAllEmployees":
+        viewAllEmployees();
+        break;
+    }
+  });
 }
