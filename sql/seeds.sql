@@ -1,42 +1,42 @@
-USE employee_db;
+USE employees_db;
 
-insert Department (id, department_name) values
-(10, "Sales"),
-(20, "IT"),
-(30, "Finance"),
-(40, "HR");
+INSERT INTO department
+    (name)
+VALUES
+    ("Sales"),
+    ("IT"),
+    ("Finance"),
+    ("HR");
 
-SELECT * FROM Department;
+INSERT INTO role
+    (title, salary, department_id)
+VALUES
+    ("Sales Manager", 45000, 1),
+    ("Sales Advisors", 30000, 1),
+    ("Sales Support Specialist", 55000, 1),
+    ("UX / UI Designer", 65000, 2),
+    ("Senior Software Developer", 80000, 2),
+    ("IT Project Manager", 70000, 2),
+    ("Accountant", 50000, 3),
+    ("Finance Operations Manager", 85000, 3),
+    ("Finance Assistant", 75000, 3),
+    ("Recruitment Officer", 40000, 4),
+    ("HR Manager", 60000, 4);
 
-insert Role (id, title, salary, department_id) values
-(110, "Sales Manager", 45000, 10),
-(111, "Sales Advisors", 30000, 10),
-(112, "Sales Support Specialist", 55000, 10),
-(113, "UX / UI Designer", 65000, 20),
-(114, "Senior Software Developer", 80000, 20),
-(115, "IT Project Manager", 70000, 20),
-(116, "Accountant", 50000, 30),
-(117, "Finance Operations Manager", 85000, 30),
-(118, "Finance Assistant", 75000, 30),
-(119, "Recruitment Officer", 40000, 40),
-(120, "HR Manager", 60000, 40);
-
-
-SELECT * FROM Role;
-
-insert Employee (id, first_name, last_name, role_id, manager_id) values
-(001, "Cade", "Perez", 110, NULL),
-(002, "Andrews", "Schultz", 111, 001),
-(003, "Anika", "Arnold", 112, 001),
-(004, "Nola", "Orozco", 115, NULL),
-(005, "Priscilla", "Rebecca", 114, 004),
-(006, "Jayson", "Ffion", 113, 004),
-(007, "James", "Bond", 116, 008),
-(008, "Finnegan", "Angus", 117, NULL),
-(009, "Patrick", "Swazy", 118, 008),
-(010, "Tara", "Aiden", 119, 011),
-(011, "Danielle", "Charles", 120, NULL),
-(012, "Dominic", "Oskar", 119, 011),
-(013, "Gillian", "Arnold", 119, 011),
-(014, "Makai", "Ciaran", 111, 001),
-(015, "Bullock", "Arnold", 111, 001);
+INSERT INTO employee
+    (first_name, last_name, role_id, manager_id)
+VALUES
+    ("Andrews", "Schultz", 1, 1),
+    ("Anika", "Arnold", 1, 1),
+    ("Nola", "Orozco", 1, NULL),
+    ("Priscilla", "Rebecca", 4, 2),
+    ("Jayson", "Ffion", 3, 2),
+    ("James", "Bond", 1, 2),
+    ("Finnegan", "Angus", 1, NULL),
+    ("Patrick", "Swazy", 1, 3),
+    ("Tara", "Aiden", 1, 3),
+    ("Danielle", "Charles", 3, NULL),
+    ("Dominic", "Oskar", 3, 1),
+    ("Gillian", "Arnold", 2, NULL),
+    ("Makai", "Ciaran", 1, 1),
+    ("Bullock", "Arnold", 2, NULL);
