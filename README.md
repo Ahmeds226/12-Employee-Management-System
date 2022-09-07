@@ -56,4 +56,4 @@ node index.js
 
 ## Walkthrough Video
 
-<!-- add video -->
+https://drive.google.com/file/d/1Jvp9VYWXuqxp6hlC38OQ3GYwkF5LsdJZ/view?usp=sharing
