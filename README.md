@@ -52,7 +52,7 @@ node index.js
 
 ## Preview:
 
-<!-- Add image -->
+<img src="./assets/images/preview.png" alt="" />
 
 ## Walkthrough Video
 
