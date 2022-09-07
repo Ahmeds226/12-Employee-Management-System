@@ -145,7 +145,7 @@ function addMenu() {
           value: "addRole",
         },
         {
-          name: "Add An Employee",
+          name: "Add an Employee",
           value: "addEmployee",
         },
       ],
@@ -238,7 +238,7 @@ function addRole(departmentID, departmentName) {
       [answers.roleName, answers.salary, parseInt(id)],
       (err, res) => {
         if (err) throw err;
-        console.log("Role has been successfully added");
+        console.log("Role has been successfully added!");
       }
     );
     mainMenu();
