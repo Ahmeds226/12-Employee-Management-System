@@ -19,32 +19,50 @@ db.connect(function (err) {
   mainMenu();
 });
 
-// Menu:
-const mainMenu = () => {
-  inquirer
-    .prompt({
-      name: "menu",
+// Main menu:
+function mainMenu() {
+  prompt([
+    {
       type: "list",
+      name: "choice",
       message: "Please select what you would like to do",
-      choices: ["View", "Add", "Update", "Delete"],
-    })
-    .then((chosen) => {
-      switch (chosen.main) {
-        case "View":
-          viewMenu();
-          break;
-        case "Add":
-          addMenu();
-          break;
-        case "Update":
-          updateMenu();
-          break;
-        case "Delete":
-          deleteMenu();
-          break;
-      }
-    });
-};
+      choices: [
+        {
+          name: "View",
+          value: "viewMenu",
+        },
+        {
+          name: "Add",
+          value: "addMenu",
+        },
+        {
+          name: "Update",
+          value: "updateMenu",
+        },
+        {
+          name: "Delete",
+          value: "deleteMenu",
+        },
+      ],
+    },
+  ]).then((res) => {
+    let choice = res.choice;
+    switch (choice) {
+      case "viewMenu":
+        viewMenu();
+        break;
+      case "addMenu":
+        addMenu();
+        break;
+      case "updateMenu":
+        updateMenu();
+        break;
+      case "deleteMenu":
+        deleteMenu();
+        break;
+    }
+  });
+}
 
 // View main menu:
 function viewMenu() {
@@ -110,7 +128,7 @@ function viewAllEmployees() {
   mainMenu();
 }
 
-// View main menu:
+// Add main menu:
 function addMenu() {
   prompt([
     {
@@ -119,11 +137,11 @@ function addMenu() {
       message: "Please select what you would like to do",
       choices: [
         {
-          name: "Add A Department",
+          name: "Add a Department",
           value: "addDepartment",
         },
         {
-          name: "Add A Role",
+          name: "Add a Role",
           value: "addRole",
         },
         {
@@ -135,14 +153,14 @@ function addMenu() {
   ]).then((res) => {
     let choice = res.choice;
     switch (choice) {
-      case "viewAllDepartments":
-        viewAllDepartments();
+      case "addDepartment":
+        addDepartment();
         break;
-      case "viewAllRoles":
-        viewAllRoles();
+      case "addRole":
+        addRole();
         break;
-      case "viewAllEmployees":
-        viewAllEmployees();
+      case "addEmployee":
+        addEmployee();
         break;
     }
   });
