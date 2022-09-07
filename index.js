@@ -1,7 +1,22 @@
 //  Imports:
-const mysql = require("mysql");
 const inquirer = require("inquirer");
-const consoleTable = require("console.table");
+const mysql = require("mysql2");
+const Table = require("console.table");
+const Connection = require("mysql/lib/Connection");
+require("dotenv").config();
+
+// Bring in the database connection
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "employee_db",
+});
+
+db.connect((error) => {
+  if (error) throw error;
+  getStarted();
+});
 
 function getStarted() {
   inquirer.prompt([
