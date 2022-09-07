@@ -64,7 +64,7 @@ function mainMenu() {
   });
 }
 
-// View main menu function:
+// View sub menu function:
 function viewMenu() {
   prompt([
     {
@@ -135,7 +135,7 @@ function viewAllEmployees() {
   mainMenu();
 }
 
-// Add main menu function:
+// Add sub menu function:
 function addMenu() {
   prompt([
     {
@@ -155,6 +155,10 @@ function addMenu() {
           name: "Add an Employee",
           value: "addEmployee",
         },
+        {
+          name: "Back to Main Menu",
+          value: "mainMenu",
+        },
       ],
     },
   ]).then((res) => {
@@ -168,6 +172,9 @@ function addMenu() {
         break;
       case "addEmployee":
         addEmployee();
+        break;
+      case "mainMenu":
+        mainMenu();
         break;
     }
   });
